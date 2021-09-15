@@ -1,34 +1,65 @@
 #include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
-//n = 1 = m
-int panggil(int m, int n);
-int panggilFor(int m, int n);
+
+//Compiler version g++ 6.3.0
+void getModus(int arr[], int size);
 int main()
 {
-    cout << panggil(2, 4);
-    cout << panggilFor(2, 4);
-    return 0;
+    int dataAngka[] = {92, 63, 60, 81, 91, 83, 60, 58, 71, 84, 56, 89, 89, 97, 79, 68, 73, 55, 49, 80, 79, 55, 67};
+    int size = sizeof(dataAngka) / sizeof(dataAngka[0]);
+    getModus(dataAngka, size);
 }
 
-int panggilFor(int m, int n)
+void getModus(int arr[], int size)
 {
-    int i, angka = 0;
-    while (n > 0)
-    {
-        angka = m + angka;
-        n--;
-    }
-    return angka;
-}
 
-int panggil(int m, int n)
-{
-    if (n == 1)
+    sort(arr, arr + size);
+    int i, tempModus = 0, modus = 0, frekModus = 0;
+    for (i = 0; i < size; i++)
     {
-        return m;
+
+        if (i < 1)
+        {
+            tempModus++;
+        }
+        else if (arr[i] == arr[i - 1])
+        {
+            tempModus++;
+        }
+        else
+        {
+            if (frekModus < tempModus)
+            {
+                frekModus = tempModus;
+            }
+            tempModus = 0;
+        }
     }
-    else
+    tempModus = 0;
+    cout << "Modus : \n";
+    for (i = 0; i < size; i++)
     {
-        return m + panggil(m, n - 1);
+        if (frekModus == 0)
+        {
+            cout << arr[i - 1] << ",";
+        }
+        else if (i < 1)
+        {
+            tempModus++;
+        }
+        else if (arr[i] == arr[i - 1])
+        {
+            tempModus++;
+        }
+        else
+        {
+
+            if (frekModus == tempModus && arr[i - 1] == arr[i - 2])
+            {
+                cout << arr[i - 1] << ",";
+            }
+            tempModus = 0;
+        }
     }
 }
